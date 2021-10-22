@@ -4,4 +4,4 @@
 
 1. Memasukan pilihan perintah yang di inginkan
 
-(System)[./doc/system.png]
+![System](./doc/system.png)
