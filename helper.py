@@ -1,43 +1,43 @@
 import locale
 import re
-from userController import tanggal_jam
+from userController import input_dates
 from openpyxl import styles
 import os
 
 # Check String caracter when user entered string caracter
-def cek_tanggal(tanggal, total_days):
-    tanggal_urut = tanggal.split('-')
-    tanggal_pilihan = tanggal.split(',')
+def check_tanggal(dates, total_days):
+    sort_dates = dates.split('-')
+    dates_chooses = dates.split(',')
 
-    cek_string = re.findall('[a-zA-Z]', tanggal)
+    check_string_caracter = re.findall('[a-zA-Z]', dates)
 
 
-    if len(cek_string) > 0:
-        return tanggal_jam('Masukan angka jangan string')
-    elif '' in tanggal_urut or '' in tanggal_pilihan:
-        return tanggal_jam('Masukan tanggal sesuai intruksi')
-    elif(len(tanggal_urut) == 2 and '-' in tanggal):
+    if len(check_string_caracter) > 0:
+        return input_dates('Masukan angka jangan string')
+    elif '' in sort_dates or '' in dates_chooses:
+        return input_dates('Masukan tanggal sesuai intruksi')
+    elif(len(sort_dates) == 2 and '-' in dates):
 
-        tanggal_urut = [int(i) for i in tanggal_urut]
-        if tanggal_urut[0] < tanggal_urut[1] and tanggal_urut[1] < total_days:
-            return tanggal_urut, '-'
+        sort_dates = [int(i) for i in sort_dates]
+        if sort_dates[0] < sort_dates[1] and sort_dates[1] < total_days:
+            return sort_dates, '-'
         else:
-            return tanggal_jam('Maaf tanggal tidak boleh kebalik atau lebih dari tanggal bulan ini')
+            return input_dates('Maaf tanggal tidak boleh kebalik atau lebih dari dates bulan ini')
 
-    elif len(tanggal_pilihan) > 1 and ',' in tanggal:
+    elif len(dates_chooses) > 1 and ',' in dates:
 
-        due_date = [int(i) < total_days for i in tanggal_pilihan]
+        due_date = [int(i) < total_days for i in dates_chooses]
         if all(due_date):
-            tanggal_pilihan = [int(i) for i in tanggal_pilihan]
-            filter_same_number = set(tanggal_pilihan)
-            print('Tanggal yang sama akan mengambil 1 tanggalan yang sama dari beberapa tanggal contoh :', filter_same_number)
+            dates_chooses = [int(i) for i in dates_chooses]
+            filter_same_number = set(dates_chooses)
+            print('tanggal yang sama akan mengambil 1 datesan yang sama dari beberapa tanggal contoh :', filter_same_number)
             return list(filter_same_number), ','
         else:
-            return tanggal_jam('Maaf anda melebihi batas tanggalan bulan ini')
-    elif int(tanggal) < total_days:
-        return [int(tanggal)], ','
+            return input_dates('Maaf anda melebihi batas tanggal bulan ini')
+    elif int(dates) < total_days:
+        return [int(dates)], ','
     else:
-        return tanggal_jam('Maaf masukan angka yang valid')
+        return input_dates('Maaf masukan angka yang valid')
         
 
 def format_rupiah(duit):
@@ -46,34 +46,29 @@ def format_rupiah(duit):
     return "Rp " + rupiah
 
 
-# def check_tanggal_inptu_excel(tanggal):
-#     if len(tanggal) == 2:
-#         tanggal = tanggal[1] - tanggal[0]
-#         for i in range(tanggal[0], tanggal[1])
 
-
-def store_data_omset(dates, ws, omset, jam, separator):
+def store_data_omset(dates, ws, total_money_omset, clock_input, separator):
    
     i = 0
     if len(dates) == 2 and '-' in separator:
-        for tanggal in range(dates[0], dates[1] + 1):
-            ws["A{}".format(tanggal + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["B{}".format(tanggal + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["C{}".format(tanggal + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+        for date in range(dates[0], dates[1] + 1):
+            ws["A{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["B{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["C{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
             
-            ws['A{}'.format(tanggal + 3)] = tanggal
-            ws['B{}'.format(tanggal + 3)] = omset[i]
-            ws['C{}'.format(tanggal + 3)] = jam
+            ws['A{}'.format(date + 3)] = date
+            ws['B{}'.format(date + 3)] = total_money_omset[i]
+            ws['C{}'.format(date + 3)] = clock_input
             i = i + 1
     elif len(dates) > 0 and ',' in separator:
-        for tanggal in dates:
-            ws["A{}".format(tanggal + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["B{}".format(tanggal + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["C{}".format(tanggal + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+        for date in dates:
+            ws["A{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["B{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["C{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
             
-            ws['A{}'.format(tanggal + 3)] = tanggal
-            ws['B{}'.format(tanggal + 3)] = omset[i]
-            ws['C{}'.format(tanggal + 3)] = jam
+            ws['A{}'.format(date + 3)] = date
+            ws['B{}'.format(date + 3)] = total_money_omset[i]
+            ws['C{}'.format(date + 3)] = clock_input
             i = i + 1
     else:
         print('Eh ada yang error gaes nanti aja')

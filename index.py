@@ -1,7 +1,7 @@
 import userController
 from colorama import Fore
 chose_user_command = userController.commandUserList()
-from excel import input_omset_harian, input_new_excel, update_excel
+from excel import user_omset_daily, input_new_excel, update_excel
 
 while True:
     if chose_user_command == 1:
@@ -9,14 +9,14 @@ while True:
         # Jika belum mengisi tanggal sebelumnya
         # Jika males ngisi tanggal default tanggal sekarang
         # Jika ingin meruntut dari tanggal ke tanggal berapa
-        file = userController.insert_file()
-        tanggal_jam = userController.tanggal_jam()
-        omset_hari_ini = input_omset_harian(tanggal_jam[0], tanggal_jam[1])
+        boolean_and_file = userController.insert_file()
+        dates_omset = userController.input_dates()
+        money_omset = user_omset_daily(dates_omset[0], dates_omset[1])
 
-        if file[0]:
-            update_excel(file[1], tanggal_jam[0][0], tanggal_jam[1], omset_hari_ini, tanggal_jam[0][1])
+        if boolean_and_file[0]:
+            update_excel(boolean_and_file[1], dates_omset[0][0], dates_omset[1], money_omset, dates_omset[0][1])
         else:
-            input_new_excel(file[1], tanggal_jam[0][0], tanggal_jam[1], omset_hari_ini, tanggal_jam[0][1])
+            input_new_excel(boolean_and_file[1], dates_omset[0][0], dates_omset[1], money_omset, dates_omset[0][1])
         break
     elif chose_user_command == 2:
         print(2)

@@ -39,7 +39,7 @@ def insert_file():
     else:
         print("error cuy")
 
-def tanggal_jam(msg = ''):
+def input_dates(msg = ''):
     tanggal = datetime.now().strftime("%d")
     jam = datetime.now().strftime("%X")
     year = datetime.now().strftime("%G")
@@ -55,9 +55,9 @@ def tanggal_jam(msg = ''):
     """.format(Fore.GREEN, Fore.RESET, msg, Fore.RED))
 
     total_days = monthrange(int(year), int(month))[1]
-    input_tanggal = input('Masukan tanggal, Default tanggal sekarang : ') or tanggal
-    input_tanggal = cek_tanggal(input_tanggal, total_days)
-    return input_tanggal, jam[:-3]
+    user_input_dates = input('Masukan tanggal, Default tanggal sekarang : ') or tanggal
+    user_input_dates = check_tanggal(user_input_dates, total_days)
+    return user_input_dates, jam[:-3]
 
 
 def check_list_data_excel(file):
@@ -71,4 +71,4 @@ def check_list_data_excel(file):
     except Exception:
         pass
 
-from helper import cek_tanggal, create_directory_check
+from helper import check_tanggal, create_directory_check
