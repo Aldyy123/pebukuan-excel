@@ -2,6 +2,7 @@ from openpyxl import Workbook, styles, load_workbook, worksheet
 from colorama import Fore
 import re
 from helper import store_data_omset
+from datetime import datetime
 
 # Memasukan hasil excel untuk di olah datanya kemudian
 # save data
@@ -9,23 +10,19 @@ from helper import store_data_omset
 # update data excel
 
 
-def input_new_excel(name_file, dates, jam, omset, separator):
+def input_new_excel(name_file, dates, dates_now, omset, separator):
     wb = Workbook()
     ws = wb.active
+    ws.title = datetime.now().strftime("%B")
 
-    ws.merge_cells('A1:C2')
-    ws['A1'] = 'Oktober'
-    ws['A1'].alignment = styles.Alignment(
-        horizontal='center', vertical='center')
-    ws['A1'].font = styles.Font(size=30, bold=True)
 
-    ws['A3'] = 'Tanggal'
-    ws['B3'] = 'Omset'
-    ws['C3'] = 'Waktu'
+    ws['A1'] = 'Tanggal'
+    ws['B1'] = 'Omset'
+    ws['C1'] = 'Waktu'
 
-    store_data_omset(dates, ws, omset, jam, separator)
+    store_data_omset(dates, ws, omset, dates_now, separator)
     
-    wb.save('./excel/{}.xlsx'.format(name_file))
+    return wb.save('./excel/{}.xlsx'.format(name_file))
 
 
 def update_excel(name_file, dates, clock_input, total_money_omset, separator):
@@ -49,9 +46,10 @@ def user_omset_daily(dates_omset_pengguna, clock_input, alert=''):
     \t  Format jika anda memasukan lebih dari jumlah omset harian adalah
     \t  Example : {0} 2000, 90000, 10000 {1}
     \t  Sesuai jumlah tanggal yang anda input
-    \t  {3}{2}{1}
+    \t  Anda harus menginput sesuai dengan tanggal omset yang telah di inputkan seperti yang bisa anda lihat disini {0}{4}{1}
     \t  Silahkan masukan omset hari ini: 
-""".format(Fore.GREEN, Fore.RESET, alert, Fore.RED))
+    \t  {3}{2}{1}
+""".format(Fore.GREEN, Fore.RESET, alert, Fore.RED, dates_omset_pengguna))
     single_omset = input_omset_user
     check_string_caracter = re.findall('[a-zA-Z]', input_omset_user)
     input_omset_user = input_omset_user.split(',')
@@ -67,7 +65,7 @@ def user_omset_daily(dates_omset_pengguna, clock_input, alert=''):
             return user_omset_daily(
                 dates_omset_pengguna, clock_input, 'Maaf input omset anda kurang atau kelebihan, silahkan lihat contoh format')
     elif len(dates_omset_pengguna[0]) > 1 and ',' in dates_omset_pengguna[1]:
-        if len(dates_omset_pengguna) == len(input_omset_user):
+        if len(dates_omset_pengguna[0]) == len(input_omset_user):
             return [int(i) for i in input_omset_user]
         else:
             return user_omset_daily(

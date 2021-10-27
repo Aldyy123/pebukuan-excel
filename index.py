@@ -19,7 +19,7 @@ while True:
             input_new_excel(boolean_and_file[1], dates_omset[0][0], dates_omset[1], money_omset, dates_omset[0][1])
         break
     elif chose_user_command == 2:
-        print(2)
+        userController.insert_file()
         break
     elif chose_user_command == 3:
         print(3)

@@ -48,27 +48,27 @@ def format_rupiah(duit):
 
 
 def store_data_omset(dates, ws, total_money_omset, clock_input, separator):
-   
+    max_row = ws.max_row + 1
     i = 0
     if len(dates) == 2 and '-' in separator:
         for date in range(dates[0], dates[1] + 1):
-            ws["A{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["B{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["C{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["A{}".format(max_row + i)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["B{}".format(max_row + i)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["C{}".format(max_row + i)].alignment = styles.Alignment(horizontal='left', vertical='center')
             
-            ws['A{}'.format(date + 3)] = date
-            ws['B{}'.format(date + 3)] = total_money_omset[i]
-            ws['C{}'.format(date + 3)] = clock_input
+            ws['A{}'.format(max_row + i)] = date
+            ws['B{}'.format(max_row + i)] = total_money_omset[i]
+            ws['C{}'.format(max_row + i)] = clock_input
             i = i + 1
     elif len(dates) > 0 and ',' in separator:
         for date in dates:
-            ws["A{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["B{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
-            ws["C{}".format(date + 3)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["A{}".format(max_row + i)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["B{}".format(max_row + i)].alignment = styles.Alignment(horizontal='left', vertical='center')
+            ws["C{}".format(max_row + i)].alignment = styles.Alignment(horizontal='left', vertical='center')
             
-            ws['A{}'.format(date + 3)] = date
-            ws['B{}'.format(date + 3)] = total_money_omset[i]
-            ws['C{}'.format(date + 3)] = clock_input
+            ws['A{}'.format(max_row + i)] = date
+            ws['B{}'.format(max_row + i)] = total_money_omset[i]
+            ws['C{}'.format(max_row + i)] = clock_input
             i = i + 1
     else:
         print('Eh ada yang error gaes nanti aja')
@@ -85,3 +85,4 @@ def create_directory_check(file):
     else:
         os.makedirs('excel')
         return False, file
+
