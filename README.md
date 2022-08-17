@@ -2,7 +2,8 @@
 
 ### Membuat pembukuan keuangan bisnis dengan excel otomatis 
 
-1. Memasukan pilihan perintah yang di inginkan
+1. Buka terminal dan ketik ``` python index.py ```
+2. Maka akan terbuka terminal dan memilih list pilihan, anda bisa memilih list tersebut
 
 ![System](./doc/system.png)
 
@@ -23,3 +24,6 @@ check sheet which exist
 
 - Mohammad Ardi Trisnaldi
 
+#### Demo Repl
+
+![Pembukuan excel](https://replit.com/@MohammadArdyy/pebukuan-excel?v=1)
