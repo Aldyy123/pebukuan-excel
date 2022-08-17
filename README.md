@@ -9,3 +9,17 @@
 #### Bug 
 
 check sheet which exist
+
+#### Resource
+
+  - Openpyxl
+  - pandas
+  - numpy
+  - colorama
+
+---
+
+#### Author
+
+- Mohammad Ardi Trisnaldi
+
