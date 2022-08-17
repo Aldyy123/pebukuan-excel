@@ -65,12 +65,12 @@ def check_list_data_excel(file):
     try:
         file = f'./excel/{file}.xlsx'
         xl = pd.ExcelFile(file)
-        print(xl.sheet_names)
+        print("Sheet excel yang tersedia: ", xl.sheet_names)
         sheet_name = input('Masukan sheet yang ingin anda lihat: ')
         data = pd.read_excel(file, sheet_name=sheet_name)
         return data
     except Exception:
-        pass
+        print("Sheet excel tidak tersedia ")
 
 
 from helper import check_tanggal, create_directory_check

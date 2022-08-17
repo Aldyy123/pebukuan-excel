@@ -1,4 +1,5 @@
 from openpyxl import Workbook, styles, load_workbook, worksheet
+from openpyxl.utils.exceptions import SheetTitleException
 from colorama import Fore
 import re
 from helper import store_data_omset
@@ -21,23 +22,30 @@ def input_new_excel(name_file, dates, dates_now, omset, separator):
     ws['C1'] = 'Waktu'
 
     store_data_omset(dates, ws, omset, dates_now, separator)
+
+    print("Berhasil di input")
     
     return wb.save('./excel/{}.xlsx'.format(name_file))
 
 
 def update_excel(name_file, dates, clock_input, total_money_omset, separator):
-    wb = load_workbook(f'./excel/{name_file}.xlsx')
-    qa_new_sheet = input("Apakah ingin membuat sheet baru? : ")
-    ws = None
-    if qa_new_sheet in ['y']:
-        qa_new_sheet = input("Masukan nama sheet yang anda inginkan : ")
-        ws = wb.create_sheet(qa_new_sheet)
-    else:
-        chose_sheet = input("Masukan sheet yang ingin anda ubah : ")
-        ws = wb[chose_sheet]
+    try:
+
+        wb = load_workbook(f'./excel/{name_file}.xlsx')
+        qa_new_sheet = input("Apakah ingin membuat sheet baru? : ")
+        ws = None
+        if qa_new_sheet in ['y', 'iya', 'yes', 'ya']:
+            qa_new_sheet = input("Masukan nama sheet yang anda inginkan : ")
+            ws = wb.create_sheet(qa_new_sheet)
+        else:
+            chose_sheet = input("Masukan sheet yang ingin anda ubah : ")
+            ws = wb[chose_sheet]        
+    except Exception:
+        print("Maaf ada masalah saat pemilihan sheet excel")
+        return update_excel(name_file, dates, clock_input, total_money_omset, separator)
 
     store_data_omset(dates, ws, total_money_omset, clock_input, separator)
-
+    print("Berhasil di ubah")
     wb.save('./excel/{}.xlsx'.format(name_file))
 
 

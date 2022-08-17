@@ -5,3 +5,7 @@
 1. Memasukan pilihan perintah yang di inginkan
 
 ![System](./doc/system.png)
+
+#### Bug 
+
+check sheet which exist

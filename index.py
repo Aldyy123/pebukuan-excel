@@ -2,6 +2,7 @@ import userController
 from colorama import Fore
 chose_user_command = userController.commandUserList()
 from excel import user_omset_daily, input_new_excel, update_excel
+from openpyxl.utils.exceptions import SheetTitleException
 
 while True:
     if chose_user_command == 1:
@@ -9,9 +10,12 @@ while True:
         # Jika belum mengisi tanggal sebelumnya
         # Jika males ngisi tanggal default tanggal sekarang
         # Jika ingin meruntut dari tanggal ke tanggal berapa
-        boolean_and_file = userController.insert_file()
-        dates_omset = userController.input_dates()
-        money_omset = user_omset_daily(dates_omset[0], dates_omset[1])
+        try:
+            boolean_and_file = userController.insert_file()
+            dates_omset = userController.input_dates()
+            money_omset = user_omset_daily(dates_omset[0], dates_omset[1])
+        except SheetTitleException:
+            print("Error")
 
         if boolean_and_file[0]:
             update_excel(boolean_and_file[1], dates_omset[0][0], dates_omset[1], money_omset, dates_omset[0][1])
