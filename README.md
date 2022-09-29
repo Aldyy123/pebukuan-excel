@@ -26,5 +26,4 @@ check sheet which exist
 
 #### Demo Repl
 
-![Pembukuan excel](https://replit.com/@MohammadArdyy/pebukuan-excel?v=1#doc/system.png)
 <a href="https://replit.com/@MohammadArdyy/pebukuan-excel?v=1#doc/system.png">Pembukuan Excel</a>
